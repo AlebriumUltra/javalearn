@@ -4,10 +4,13 @@
  */
 package lab1;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+
 /**
  *
  * @author dunke
  */
+
 public class NewJFrame extends javax.swing.JFrame {
 
     public NewJFrame() {
@@ -25,6 +28,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +95,20 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Очистить");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Заполнить");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,7 +127,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -123,22 +144,98 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                        .addGap(11, 11, 11)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton5)))
                 .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public class RecIntegral
+    {
+        private String lowStep;
+        private String highStep;
+        private String integralStep;
+        private String integralResult;
+        
+        
+        public RecIntegral(String lowStep, String highStep, String integralStep)
+        {
+            this.lowStep = lowStep;
+            this.highStep = highStep;
+            this.integralStep = integralStep;
+            this.integralResult = "0";
+        }
+        
+        public void setResult(String integralResult)
+        {
+            this.integralResult = integralResult;
+        }
+        
+        public String getLowStep()
+        {
+            return this.lowStep;
+        }
+        
+        public String getIntegralStep()
+        {
+            return this.integralStep;
+        }
+        
+        public String getIntegralResult()
+        {
+            return this.integralResult;
+        }
+        
+         public String getHighStep()
+        {
+            return this.highStep;
+        }
+         
+         
+        @Override public boolean equals(Object obj) {
+             if (this == obj) {
+                 return true;
+             }
+             if (obj == null) {
+                 return false;
+             }
+             if (!(obj instanceof RecIntegral)) {
+                 return false;
+             }
+            RecIntegral p = (RecIntegral) obj;
+            return (this.lowStep.equals(p.lowStep) && this.highStep.equals(p.highStep) && this.integralStep.equals(p.integralResult));
+        }
+        
+        @Override public int hashCode()
+        {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + Integer.parseInt(this.lowStep);
+            result = prime * result + Integer.parseInt(this.highStep);
+            return result;
+        }
+        
+    }
+    
+    
+    
+    ArrayList<RecIntegral> integralList = new ArrayList<>();
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   
+
      DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();     
      dt.addRow(new Object[]{jTextField1.getText(),jTextField3.getText(),jTextField2.getText()});
+     integralList.add(0, new RecIntegral(jTextField1.getText(),jTextField3.getText(),jTextField2.getText()));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -161,10 +258,11 @@ public class NewJFrame extends javax.swing.JFrame {
         
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         
-        int test = jTable1.getSelectedRow();
+        int row = jTable1.getSelectedRow();
         
-        if(test != -1){
+        if(row != -1){
         dt.removeRow(jTable1.getSelectedRow());
+        integralList.remove(row);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -191,10 +289,24 @@ public class NewJFrame extends javax.swing.JFrame {
         }
          
          result+= h*(1/a+1/b)/2;
+         integralList.get(row).setResult(Double.toString(result));
          
-        dt.setValueAt(result, row, 3);
+         dt.setValueAt(result, row, 3);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+        dt.setRowCount(0);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+            for (RecIntegral recInt : integralList)
+            {
+                dt.addRow(new Object[]{recInt.getLowStep(), recInt.getHighStep(), recInt.getIntegralStep(), recInt.getIntegralResult()});
+            }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,6 +347,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
