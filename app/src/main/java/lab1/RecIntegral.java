@@ -35,6 +35,23 @@ public class RecIntegral implements Serializable
             this.integralResult = "0";
         }
         
+        public RecIntegral(String lowStep, String highStep, String integralStep, String integralResult) throws NumException
+        {
+            if(Double.valueOf(lowStep) < 0.000001 
+                    || Double.valueOf(lowStep) > 1000000
+                    || Double.valueOf(highStep) < 0.000001
+                    || Double.valueOf(highStep) > 1000000
+                    || Double.valueOf(integralStep) < 0.000001
+                    || Double.valueOf(integralStep) > 1000000)
+            {
+                throw new NumException("Numbers must be between 0.000001 and 1000000");
+            }
+            this.lowStep = lowStep;
+            this.highStep = highStep;
+            this.integralStep = integralStep;
+            this.integralResult = integralResult;
+        }
+        
         public void setResult(String integralResult)
         {
             this.integralResult = integralResult;

@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.io.*;
+import javax.swing.JFileChooser;
 /**
  *
  * @author dunke
@@ -37,6 +38,8 @@ public class NewJFrame extends javax.swing.JFrame  {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +54,7 @@ public class NewJFrame extends javax.swing.JFrame  {
 
             },
             new String [] {
-                "Нижняя граница интегрирования", "Верхняя граница интегрирования", "Шаг интегрирования", "Результат вычисления"
+                "РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "РЁР°Рі РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р РµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёСЃР»РµРЅРёСЏ"
             }
         ));
         jTable1.setName(""); // NOI18N
@@ -66,7 +69,7 @@ public class NewJFrame extends javax.swing.JFrame  {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Добавить");
+        jButton1.setText("Р”РѕР±Р°РІРёС‚СЊ");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -78,7 +81,7 @@ public class NewJFrame extends javax.swing.JFrame  {
             }
         });
 
-        jButton2.setText("Удалить");
+        jButton2.setText("РЈРґР°Р»РёС‚СЊ");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -90,7 +93,7 @@ public class NewJFrame extends javax.swing.JFrame  {
             }
         });
 
-        jButton3.setText("Вычислить");
+        jButton3.setText("Р’С‹С‡РёСЃР»РёС‚СЊ");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -102,14 +105,14 @@ public class NewJFrame extends javax.swing.JFrame  {
             }
         });
 
-        jButton4.setText("Очистить");
+        jButton4.setText("РћС‡РёСЃС‚РёС‚СЊ");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Заполнить");
+        jButton5.setText("Р—Р°РїРѕР»РЅРёС‚СЊ");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -127,6 +130,20 @@ public class NewJFrame extends javax.swing.JFrame  {
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("save text");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("load text");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
             }
         });
 
@@ -152,8 +169,11 @@ public class NewJFrame extends javax.swing.JFrame  {
                         .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton6)
-                    .addComponent(jButton7))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton9))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,7 +201,11 @@ public class NewJFrame extends javax.swing.JFrame  {
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton7)))
+                        .addComponent(jButton7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton9)))
                 .addGap(33, 33, 33))
         );
 
@@ -299,6 +323,97 @@ public class NewJFrame extends javax.swing.JFrame  {
             }
 
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save file text");
+        int res = fileChooser.showSaveDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION)
+        {
+            File fopen = fileChooser.getSelectedFile();
+            FileWriter fwriter = null;
+            try
+            {
+                fwriter = new FileWriter(fopen);
+                for(RecIntegral recInt : integralList)
+                {
+                    fwriter.write(recInt.getLowStep() + " " + recInt.getHighStep() + " " + recInt.getIntegralStep() + " " + recInt.getIntegralResult() + "\r\n");
+                }
+                fwriter.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                if(fwriter != null)
+                {
+                    try
+                    {
+                        fwriter.close();
+                    }
+                    catch(IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Load file text");
+        int res = fileChooser.showOpenDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION)
+        {
+            File fopen = fileChooser.getSelectedFile();
+            BufferedReader bufread = null;
+            FileReader fread = null;
+            String line;
+            String[] values;
+            try
+            {
+                fread = new FileReader(fopen);
+                bufread = new BufferedReader(fread);
+                while(true)
+                {
+                    line = bufread.readLine();
+                    if(line == null)
+                        break;
+                    values = line.split(" ");
+                    try
+                    {
+                        integralList.add(0, new RecIntegral(values[0], values[1], values[2], values[3]));
+                        dt.addRow(new Object[]{values[0], values[1], values[2], values[3]});
+                    }
+                    catch (NumException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                    try
+                    {
+                        fread.close();
+                        bufread.close();
+                    }
+                    catch(IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+    }//GEN-LAST:event_jButton9ActionPerformed
     
   
     /**
@@ -344,6 +459,8 @@ public class NewJFrame extends javax.swing.JFrame  {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
