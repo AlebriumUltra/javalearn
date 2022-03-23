@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.io.*;
 /**
  *
  * @author dunke
  */
 
-public class NewJFrame extends javax.swing.JFrame {
+
+
+public class NewJFrame extends javax.swing.JFrame  {
 
     public NewJFrame() {
         initComponents();
@@ -33,6 +35,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,7 +51,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "РЁР°Рі РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р РµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёСЃР»РµРЅРёСЏ"
+                "Нижняя граница интегрирования", "Верхняя граница интегрирования", "Шаг интегрирования", "Результат вычисления"
             }
         ));
         jTable1.setName(""); // NOI18N
@@ -62,7 +66,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Р”РѕР±Р°РІРёС‚СЊ");
+        jButton1.setText("Добавить");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -74,7 +78,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("РЈРґР°Р»РёС‚СЊ");
+        jButton2.setText("Удалить");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -86,7 +90,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Р’С‹С‡РёСЃР»РёС‚СЊ");
+        jButton3.setText("Вычислить");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -98,17 +102,31 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("РћС‡РёСЃС‚РёС‚СЊ");
+        jButton4.setText("Очистить");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Р—Р°РїРѕР»РЅРёС‚СЊ");
+        jButton5.setText("Заполнить");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("save bin");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("load bin");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
             }
         });
 
@@ -127,12 +145,15 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,101 +177,18 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)))
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton7)))
                 .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    class NumException  extends Exception
-    {
-        String message;
-        
-        NumException(String except_message) 
-        {
-            this.message = except_message;
-        }
-        
-        @Override
-        public String toString()
-        {
-            return ("NumException trigger: " + this.message);
-        }
-    }
-    
-    
-    public class RecIntegral
-    {
-        private String lowStep;
-        private String highStep;
-        private String integralStep;
-        private String integralResult;
-        
-        
-        public RecIntegral(String lowStep, String highStep, String integralStep) throws NumException
-        {
-            if(Double.valueOf(lowStep) < 0.000001 
-                    || Double.valueOf(lowStep) > 1000000
-                    || Double.valueOf(highStep) < 0.000001
-                    || Double.valueOf(highStep) > 1000000
-                    || Double.valueOf(integralStep) < 0.000001
-                    || Double.valueOf(integralStep) > 1000000)
-            {
-                throw new NumException("Numbers must be between 0.000001 and 1000000");
-            }
-            this.lowStep = lowStep;
-            this.highStep = highStep;
-            this.integralStep = integralStep;
-            this.integralResult = "0";
-        }
-        
-        public void setResult(String integralResult)
-        {
-            this.integralResult = integralResult;
-        }
-        
-        public String getLowStep()
-        {
-            return this.lowStep;
-        }
-        
-        public String getIntegralStep()
-        {
-            return this.integralStep;
-        }
-        
-        public String getIntegralResult()
-        {
-            return this.integralResult;
-        }
-        
-         public String getHighStep()
-        {
-            return this.highStep;
-        }
-        
-        public double integralCalculate()
-        {
-            double a = Double.valueOf(this.lowStep);
-            double b = Double.valueOf(this.highStep);
-            double h = Double.valueOf(this.integralStep);
-            double n = (b-a)/h;
-            double result = 0;
-            
-            for (int i = 0; i < n-1; i++){
-                result+=1/(a+i*h)*h;
-            }
-         
-            result+= h*(1/a+1/b)/2;
-            this.integralResult = Double.toString(result);
-            return result;
-        }
-    }
-    
-    
-    
-    ArrayList<RecIntegral> integralList = new ArrayList<>();
+   public ArrayList<RecIntegral> integralList = new ArrayList<>();
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      try
@@ -261,8 +199,6 @@ public class NewJFrame extends javax.swing.JFrame {
      }  catch (NumException ex) { 
              JOptionPane.showMessageDialog(null, ex);
         } 
-     
-     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -317,7 +253,54 @@ public class NewJFrame extends javax.swing.JFrame {
                 dt.addRow(new Object[]{recInt.getLowStep(), recInt.getHighStep(), recInt.getIntegralStep(), recInt.getIntegralResult()});
             }
     }//GEN-LAST:event_jButton5ActionPerformed
+    
+    
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+           
+            ObjectOutputStream saveArray = null;
+            try{
+                saveArray = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("test.ser")));
+                saveArray.writeObject(integralList);
+            }catch(IOException e){
+                e.printStackTrace();
+            }finally{
+                try{
+                    saveArray.close();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }           
+            }
+  
+    }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       
+        DefaultTableModel dt = (DefaultTableModel)jTable1.getModel();
+        dt.setRowCount(0);
+        ObjectInputStream loadArray = null;
+        try{
+            loadArray = new ObjectInputStream(new BufferedInputStream(new FileInputStream("test.ser")));
+            integralList = (ArrayList)loadArray.readObject();
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(ClassNotFoundException classErr){
+            JOptionPane.showMessageDialog(null, classErr.getMessage());
+        }finally{
+            try{
+                loadArray.close();
+            }catch(IOException e){
+                e.printStackTrace();
+            }           
+        }      
+        
+       for (RecIntegral recInt : integralList)
+            {
+                dt.addRow(new Object[]{recInt.getLowStep(), recInt.getHighStep(), recInt.getIntegralStep(), recInt.getIntegralResult()});
+            }
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+    
+  
     /**
      * @param args the command line arguments
      */
@@ -359,6 +342,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
