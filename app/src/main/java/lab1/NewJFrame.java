@@ -281,9 +281,16 @@ public class NewJFrame extends javax.swing.JFrame  {
     
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
            
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save file text");
+        int res = fileChooser.showSaveDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION)
+        {
+            File fopen = fileChooser.getSelectedFile();
             ObjectOutputStream saveArray = null;
             try{
-                saveArray = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("test.ser")));
+                saveArray = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fopen)));
                 saveArray.writeObject(integralList);
             }catch(IOException e){
                 e.printStackTrace();
@@ -294,16 +301,22 @@ public class NewJFrame extends javax.swing.JFrame  {
                     e.printStackTrace();
                 }           
             }
-  
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
        
         DefaultTableModel dt = (DefaultTableModel)jTable1.getModel();
         dt.setRowCount(0);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Load file binary");
+        int res = fileChooser.showOpenDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION)
+        {
+        File fopen = fileChooser.getSelectedFile();
         ObjectInputStream loadArray = null;
         try{
-            loadArray = new ObjectInputStream(new BufferedInputStream(new FileInputStream("test.ser")));
+            loadArray = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fopen)));
             integralList = (ArrayList)loadArray.readObject();
         }catch(IOException e){
             e.printStackTrace();
@@ -321,7 +334,7 @@ public class NewJFrame extends javax.swing.JFrame  {
             {
                 dt.addRow(new Object[]{recInt.getLowStep(), recInt.getHighStep(), recInt.getIntegralStep(), recInt.getIntegralResult()});
             }
-
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
