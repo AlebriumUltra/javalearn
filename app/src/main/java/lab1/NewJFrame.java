@@ -283,7 +283,7 @@ public class NewJFrame extends javax.swing.JFrame  {
            
         
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Save file text");
+        fileChooser.setDialogTitle("Save file binary");
         int res = fileChooser.showSaveDialog(null);
         if(res == JFileChooser.APPROVE_OPTION)
         {
