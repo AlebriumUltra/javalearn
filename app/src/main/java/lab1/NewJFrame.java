@@ -54,7 +54,7 @@ public class NewJFrame extends javax.swing.JFrame  {
 
             },
             new String [] {
-                "РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "РЁР°Рі РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р РµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёСЃР»РµРЅРёСЏ"
+                "Нижняя граница интегрирования", "Верхняя граница интегрирования", "Шаг интегрирования", "Результат вычисления"
             }
         ));
         jTable1.setName(""); // NOI18N
@@ -69,50 +69,35 @@ public class NewJFrame extends javax.swing.JFrame  {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Р”РѕР±Р°РІРёС‚СЊ");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
+        jButton1.setText("Добавить");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("РЈРґР°Р»РёС‚СЊ");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
+        jButton2.setText("Удалить");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Р’С‹С‡РёСЃР»РёС‚СЊ");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
+        jButton3.setText("Вычислить");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("РћС‡РёСЃС‚РёС‚СЊ");
+        jButton4.setText("Очистить");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Р—Р°РїРѕР»РЅРёС‚СЊ");
+        jButton5.setText("Заполнить");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -213,7 +198,29 @@ public class NewJFrame extends javax.swing.JFrame  {
     }// </editor-fold>//GEN-END:initComponents
     
    public ArrayList<RecIntegral> integralList = new ArrayList<>();
-    
+   
+   public class MyThread extends Thread {
+
+  @Override
+    public void run(){
+         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();      
+        
+        int row = jTable1.getSelectedRow();
+        
+        if(row != -1){
+         dt.setValueAt(integralList.get(row).integralCalculate(), row, 3);
+        }
+       
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+                System.out.println("Interrupt");
+            }
+        }
+      
+}
+   
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      try
      {
@@ -225,20 +232,8 @@ public class NewJFrame extends javax.swing.JFrame  {
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3MouseClicked
-
     private void none(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_none
-      
+       
     }//GEN-LAST:event_none
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -255,13 +250,9 @@ public class NewJFrame extends javax.swing.JFrame  {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
          
-        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();      
-        
-        int row = jTable1.getSelectedRow();
-        
-        if(row != -1){
-         dt.setValueAt(integralList.get(row).integralCalculate(), row, 3);
-        }
+       MyThread thread = new MyThread();
+       thread.start();
+       thread.interrupt();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
