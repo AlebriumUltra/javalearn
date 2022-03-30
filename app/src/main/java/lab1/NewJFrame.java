@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.io.*;
 import javax.swing.JFileChooser;
+import java.net.*;
 /**
  *
  * @author dunke
@@ -70,11 +71,6 @@ public class NewJFrame extends javax.swing.JFrame  {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Добавить");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -82,11 +78,6 @@ public class NewJFrame extends javax.swing.JFrame  {
         });
 
         jButton2.setText("Удалить");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -94,11 +85,6 @@ public class NewJFrame extends javax.swing.JFrame  {
         });
 
         jButton3.setText("Вычислить");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -213,32 +199,68 @@ public class NewJFrame extends javax.swing.JFrame  {
     }// </editor-fold>//GEN-END:initComponents
     
    public ArrayList<RecIntegral> integralList = new ArrayList<>();
-    
+   
+   public class MyThread extends Thread {
+//       private DatagramSocket socket;
+//       private boolean running;
+//       private byte[] buf = new byte[256];
+       
+//       public MyThread(){
+//       socket = new DatagramSocket(4445);
+//       }
+//       
+//       public void run(){
+//           running=true;
+//           while(running){
+//           DatagramPacket packet =new DatagramPacket(buf, buf.length);
+//           socket.receive(packet);
+//           InetAddress address = packet.getAddress();
+//           int port = packet.getPort();
+//           packet=new DatagramPacket(buf, buf.length,address, port);
+//           String recieved = new String(packet.getData(),0,packet.getLength());
+//           if(recieved.equals("end")){
+//               running =false;
+//               continue;
+//           }
+//           socket.send(packet);
+//           }
+//           
+//           socket.close();
+//           }
+//       }
+  @Override
+    public void run(){
+         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();      
+        
+        int row = jTable1.getSelectedRow();
+        
+        if(row != -1){
+         dt.setValueAt(integralList.get(row).integralCalculate(), row, 3);
+        }
+       
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+                System.out.println("Interrupt");
+            }
+        }
+}
+   
+   
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      try
      {
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         integralList.add(0, new RecIntegral(jTextField1.getText(),jTextField3.getText(),jTextField2.getText()));    
-        dt.addRow(new Object[]{jTextField1.getText(),jTextField3.getText(),jTextField2.getText()}); 
+        dt.insertRow(0,new Object[]{jTextField1.getText(),jTextField3.getText(),jTextField2.getText()}); 
      }  catch (NumException ex) { 
              JOptionPane.showMessageDialog(null, ex);
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3MouseClicked
-
     private void none(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_none
-      
+       
     }//GEN-LAST:event_none
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -255,13 +277,8 @@ public class NewJFrame extends javax.swing.JFrame  {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
          
-        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();      
-        
-        int row = jTable1.getSelectedRow();
-        
-        if(row != -1){
-         dt.setValueAt(integralList.get(row).integralCalculate(), row, 3);
-        }
+       MyThread thread = new MyThread();
+       thread.start();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -281,9 +298,16 @@ public class NewJFrame extends javax.swing.JFrame  {
     
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
            
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save file binary");
+        int res = fileChooser.showSaveDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION)
+        {
+            File fopen = fileChooser.getSelectedFile();
             ObjectOutputStream saveArray = null;
             try{
-                saveArray = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("test.ser")));
+                saveArray = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fopen)));
                 saveArray.writeObject(integralList);
             }catch(IOException e){
                 e.printStackTrace();
@@ -294,16 +318,22 @@ public class NewJFrame extends javax.swing.JFrame  {
                     e.printStackTrace();
                 }           
             }
-  
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
        
         DefaultTableModel dt = (DefaultTableModel)jTable1.getModel();
         dt.setRowCount(0);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Load file binary");
+        int res = fileChooser.showOpenDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION)
+        {
+        File fopen = fileChooser.getSelectedFile();
         ObjectInputStream loadArray = null;
         try{
-            loadArray = new ObjectInputStream(new BufferedInputStream(new FileInputStream("test.ser")));
+            loadArray = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fopen)));
             integralList = (ArrayList)loadArray.readObject();
         }catch(IOException e){
             e.printStackTrace();
@@ -321,7 +351,7 @@ public class NewJFrame extends javax.swing.JFrame  {
             {
                 dt.addRow(new Object[]{recInt.getLowStep(), recInt.getHighStep(), recInt.getIntegralStep(), recInt.getIntegralResult()});
             }
-
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
