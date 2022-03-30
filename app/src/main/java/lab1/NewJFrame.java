@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.io.*;
 import javax.swing.JFileChooser;
+import java.net.*;
 /**
  *
  * @author dunke
@@ -54,7 +55,7 @@ public class NewJFrame extends javax.swing.JFrame  {
 
             },
             new String [] {
-                "Нижняя граница интегрирования", "Верхняя граница интегрирования", "Шаг интегрирования", "Результат вычисления"
+                "РќРёР¶РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р° РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "РЁР°Рі РёРЅС‚РµРіСЂРёСЂРѕРІР°РЅРёСЏ", "Р РµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёСЃР»РµРЅРёСЏ"
             }
         ));
         jTable1.setName(""); // NOI18N
@@ -69,35 +70,35 @@ public class NewJFrame extends javax.swing.JFrame  {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Добавить");
+        jButton1.setText("Р”РѕР±Р°РІРёС‚СЊ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Удалить");
+        jButton2.setText("РЈРґР°Р»РёС‚СЊ");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Вычислить");
+        jButton3.setText("Р’С‹С‡РёСЃР»РёС‚СЊ");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Очистить");
+        jButton4.setText("РћС‡РёСЃС‚РёС‚СЊ");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Заполнить");
+        jButton5.setText("Р—Р°РїРѕР»РЅРёС‚СЊ");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -200,7 +201,33 @@ public class NewJFrame extends javax.swing.JFrame  {
    public ArrayList<RecIntegral> integralList = new ArrayList<>();
    
    public class MyThread extends Thread {
-
+//       private DatagramSocket socket;
+//       private boolean running;
+//       private byte[] buf = new byte[256];
+       
+//       public MyThread(){
+//       socket = new DatagramSocket(4445);
+//       }
+//       
+//       public void run(){
+//           running=true;
+//           while(running){
+//           DatagramPacket packet =new DatagramPacket(buf, buf.length);
+//           socket.receive(packet);
+//           InetAddress address = packet.getAddress();
+//           int port = packet.getPort();
+//           packet=new DatagramPacket(buf, buf.length,address, port);
+//           String recieved = new String(packet.getData(),0,packet.getLength());
+//           if(recieved.equals("end")){
+//               running =false;
+//               continue;
+//           }
+//           socket.send(packet);
+//           }
+//           
+//           socket.close();
+//           }
+//       }
   @Override
     public void run(){
          DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();      
@@ -218,15 +245,15 @@ public class NewJFrame extends javax.swing.JFrame  {
                 System.out.println("Interrupt");
             }
         }
-      
 }
+   
    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      try
      {
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         integralList.add(0, new RecIntegral(jTextField1.getText(),jTextField3.getText(),jTextField2.getText()));    
-        dt.addRow(new Object[]{jTextField1.getText(),jTextField3.getText(),jTextField2.getText()}); 
+        dt.insertRow(0,new Object[]{jTextField1.getText(),jTextField3.getText(),jTextField2.getText()}); 
      }  catch (NumException ex) { 
              JOptionPane.showMessageDialog(null, ex);
         } 
@@ -252,7 +279,6 @@ public class NewJFrame extends javax.swing.JFrame  {
          
        MyThread thread = new MyThread();
        thread.start();
-       thread.interrupt();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
